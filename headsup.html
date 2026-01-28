@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heads Up! 🎭 Indian Edition</title>
+    <style>
+        /* ===== CSS VARIABLES & RESET ===== */
+        :root {
+            --primary: #FF6B6B;
+            --primary-dark: #EE5A52;
+            --secondary: #4ECDC4;
+            --accent: #FFE66D;
+            --dark: #1A1A2E;
+            --light: #F7F7F7;
+            --success: #51CF66;
+            --danger: #FF6B6B;
+            --text-primary: #1A1A2E;
+            --text-light: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            overflow: hidden;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes wordSwitch {
+            0% {
+                opacity: 0;
+                transform: rotateY(90deg) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: rotateY(0) scale(1);
+            }
+        }
+
+        @keyframes countdownPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* ===== SCREENS ===== */
+        .screen {
+            display: none;
+            width: 100%;
+            max-width: 600px;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* ===== HOME SCREEN ===== */
+        .home-screen {
+            text-align: center;
+            gap: 30px;
+            min-height: 100vh;
+            justify-content: center;
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--text-light);
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 20px;
+        }
+
+        .tagline {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .mode-selection {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 20px 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .mode-btn:active {
+            transform: scale(0.98);
+        }
+
+        .solo-btn {
+            background: var(--primary);
+            color: white;
+        }
+
+        .solo-btn:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 6px 20px rgba(255,107,107,0.4);
+        }
+
+        .daily-btn {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .daily-btn:hover {
+            background: #3DB8AE;
+            box-shadow: 0 6px 20px rgba(78,205,196,0.4);
+        }
+
+        /* ===== CATEGORY SELECTION ===== */
+        .category-screen {
+            gap: 30px;
+            min-height: 100vh;
+        }
+
+        .category-title {
+            font-size: 2rem;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+
+        .category-subtitle {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 30px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .category-card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            text-align: center;
+            border: 3px solid transparent;
+        }
+
+        .category-card:active {
+            transform: scale(0.95);
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+        }
+
+        .category-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .category-count {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        /* Category specific colors */
+        .cat-movies { border-color: #FF6B6B; background: rgba(255,107,107,0.05); }
+        .cat-theatre { border-color: #4ECDC4; background: rgba(78,205,196,0.05); }
+        .cat-songs { border-color: #FFE66D; background: rgba(255,230,109,0.05); }
+        .cat-slang { border-color: #A78BFA; background: rgba(167,139,250,0.05); }
+        .cat-culture { border-color: #FB7E14; background: rgba(251,126,20,0.05); }
+        .cat-personality { border-color: #06D6A0; background: rgba(6,214,160,0.05); }
+        .cat-party { border-color: #EF476F; background: rgba(239,71,111,0.05); }
+        .cat-kids { border-color: #90BE6D; background: rgba(144,190,109,0.05); }
+
+        /* ===== GAME SCREEN ===== */
+        .game-screen {
+            gap: 30px;
+            min-height: 100vh;
+            justify-content: space-around;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .game-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .timer-display {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: rgba(255,255,255,0.2);
+            padding: 15px 25px;
+            border-radius: 15px;
+            min-width: 100px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .timer-display.low {
+            background: rgba(255,107,107,0.4);
+            animation: countdownPulse 1s ease-in-out infinite;
+        }
+
+        .score-badge {
+            display: flex;
+            gap: 15px;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .score-item {
+            background: rgba(255,255,255,0.15);
+            padding: 10px 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .word-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            perspective: 1000px;
+        }
+
+        .word-display {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            text-align: center;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            max-width: 100%;
+            word-wrap: break-word;
+            animation: wordSwitch 0.4s ease-out;
+            line-height: 1.2;
+            padding: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 400px;
+            margin-top: auto;
+            margin-bottom: 30px;
+        }
+
+        .game-btn {
+            flex: 1;
+            padding: 25px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .game-btn:active {
+            transform: scale(0.95);
+        }
+
+        .game-btn::before {
+            font-size: 1.8rem;
+        }
+
+        .correct-btn {
+            background: var(--success);
+            box-shadow: 0 6px 20px rgba(81,207,102,0.4);
+        }
+
+        .correct-btn:hover {
+            background: #40C057;
+        }
+
+        .skip-btn {
+            background: var(--danger);
+            box-shadow: 0 6px 20px rgba(255,107,107,0.4);
+        }
+
+        .skip-btn:hover {
+            background: #EE5A52;
+        }
+
+        /* ===== RESULTS SCREEN ===== */
+        .results-screen {
+            gap: 30px;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        .results-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            margin-top: 40px;
+        }
+
+        .results-card {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .result-stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            border-bottom: 2px solid #EEE;
+        }
+
+        .result-stat:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            text-align: left;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .share-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255,107,107,0.1);
+            border-radius: 15px;
+            border: 2px dashed var(--primary);
+        }
+
+        .share-text {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .share-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            word-break: break-all;
+            border: 2px solid var(--primary);
+        }
+
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .button-row {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 30px;
+        }
+
+        .secondary-btn {
+            flex: 1;
+            padding: 18px;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .primary-btn {
+            background: var(--primary);
+            color: white;
+        }
+
+        .primary-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .outline-btn {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .outline-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ===== DAILY CHALLENGE SCREEN ===== */
+        .daily-locked {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 400px;
+        }
+
+        .lock-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .locked-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+
+        .locked-message {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .unlock-time {
+            background: var(--accent);
+            color: var(--text-primary);
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        .back-btn {
+            background: var(--secondary);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #3DB8AE;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .word-display {
+                font-size: 2.5rem;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo {
+                font-size: 3rem;
+            }
+
+            .game-btn {
+                padding: 20px;
+                font-size: 1rem;
+            }
+
+            .timer-display {
+                font-size: 2rem;
+            }
+        }
+
+        /* ===== UTILITY CLASSES ===== */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Prevent screen lock */
+        body.game-active {
+            -webkit-touch-callout: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HOME SCREEN -->
+        <div class="screen home-screen active">
+            <div class="logo">🎭</div>
+            <h1 class="category-title">HEADS UP!</h1>
+            <p class="subtitle">Indian Edition</p>
+            <p class="tagline">Perfect for parties, fun with friends & family</p>
+            
+            <div class="mode-selection">
+                <button class="mode-btn solo-btn" onclick="startMode('solo')">
+                    👥 Solo/Pass & Play
+                </button>
+                <button class="mode-btn daily-btn" onclick="startMode('daily')">
+                    🎯 Daily Challenge
+                </button>
+            </div>
+        </div>
+
+        <!-- CATEGORY SELECTION SCREEN -->
+        <div class="screen category-screen">
+            <h2 class="category-title">Pick a Category</h2>
+            <p class="category-subtitle" id="categorySubtitle">Choose what to guess!</p>
+            
+            <div class="category-grid" id="categoryGrid"></div>
+        </div>
+
+        <!-- GAME SCREEN -->
+        <div class="screen game-screen">
+            <div class="game-header">
+                <div class="timer-display" id="timerDisplay">60</div>
+                <div class="score-badge">
+                    <div class="score-item">✅ <span id="correctCount">0</span></div>
+                    <div class="score-item">⏭️ <span id="skipCount">0</span></div>
+                </div>
+            </div>
+
+            <div class="word-container">
+                <div class="word-display" id="wordDisplay">Get Ready!</div>
+            </div>
+
+            <div class="button-group">
+                <button class="game-btn correct-btn" id="correctBtn" onclick="markCorrect()">
+                    ✅ CORRECT
+                </button>
+                <button class="game-btn skip-btn" id="skipBtn" onclick="markSkip()">
+                    ⏭️ SKIP
+                </button>
+            </div>
+        </div>
+
+        <!-- RESULTS SCREEN -->
+        <div class="screen results-screen">
+            <h2 class="results-title">Game Over! 🎉</h2>
+            
+            <div class="results-card">
+                <div class="result-stat">
+                    <span class="stat-label">✅ Correct</span>
+                    <span class="stat-value" id="finalCorrect">0</span>
+                </div>
+                <div class="result-stat">
+                    <span class="stat-label">⏭️ Skipped</span>
+                    <span class="stat-value" id="finalSkipped">0</span>
+                </div>
+                <div class="result-stat">
+                    <span class="stat-label">🏆 Score</span>
+                    <span class="stat-value" id="finalScore">0</span>
+                </div>
+            </div>
+
+            <div class="share-section">
+                <div class="share-text">📱 Share Your Score</div>
+                <div class="share-box" id="shareBox"></div>
+                <button class="copy-btn" onclick="copyShare()">📋 Copy to Clipboard</button>
+            </div>
+
+            <div class="button-row">
+                <button class="secondary-btn primary-btn" onclick="restartGame()">
+                    Play Again 🎮
+                </button>
+                <button class="secondary-btn outline-btn" onclick="goHome()">
+                    Home 🏠
+                </button>
+            </div>
+        </div>
+
+        <!-- DAILY CHALLENGE LOCKED SCREEN -->
+        <div class="screen" id="dailyLockedScreen">
+            <div class="daily-locked">
+                <div class="lock-icon">🔒</div>
+                <h2 class="locked-title">Come Back Tomorrow!</h2>
+                <p class="locked-message">You've already played today's challenge. Each player gets one attempt per day.</p>
+                <div class="unlock-time" id="unlockTime"></div>
+                <button class="back-btn" onclick="goHome()">← Back to Home</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== GAME DATA ==========
+        const categories = {
+            'movies': {
+                name: '🎬 Indian Movies',
+                icon: '🎬',
+                words: [
+                    'Sholay', 'Lagaan', 'Dilwale Dulhania Le Jayenge', '3 Idiots', 'Dangal',
+                    'Aamir Khan', 'Amitabh Bachchan', 'Shahrukh Khan', 'Rajesh Khanna',
+                    'Bollywood', 'Rajput', 'Coolie', 'Kuch Kuch Hota Hai', 'Dil Se',
+                    'Kabhi Khushi Kabhi Gham', 'Barfi', 'Mohabbatein', 'Race',
+                    'Padmaavat', 'Jab We Met', 'Love Aaj Kal', 'Raees', 'Drishyam',
+                    'Sanjay Dutt', 'Salman Khan', 'Akshay Kumar', 'Ajay Devgn',
+                    'Ranbir Kapoor', 'Deepika Padukone', 'Priyanka Chopra', 'Katrina Kaif',
+                    'Aishwarya Rai', 'Madhuri Dixit', 'Kareena Kapoor', 'Kangana Ranaut'
+                ]
+            },
+            'theatre': {
+                name: '🎭 Indian Theatre',
+                icon: '🎭',
+                words: [
+                    'Natya Shastra', 'Kathakali', 'Bharatanatyam', 'Kathak', 'Odissi',
+                    'Koodiyatta', 'Chhau', 'Manipuri Dance', 'Kuchipudi', 'Mohiniyattam',
+                    'Yakshagana', 'Jatra', 'Lila', 'Ramlila', 'Ramayan',
+                    'Sanskrit Theatre', 'Natyakrama', 'Rang De Basanti Play', 'Tughlak',
+                    'Mudras', 'Mudra', 'Abhinaya', 'Hasta Mudra', 'Rasa',
+                    'Bhagavata Mela', 'Swang', 'Nautch', 'Nautanki', 'Tamasha'
+                ]
+            },
+            'songs': {
+                name: '🎵 Indian Songs & Artists',
+                icon: '🎵',
+                words: [
+                    'Lata Mangeshkar', 'Mohammed Rafi', 'Kishore Kumar', 'Asha Parekh',
+                    'Sunidhi Chauhan', 'Rahat Fateh Ali Khan', 'Shreya Ghoshal', 'Sonu Nigam',
+                    'A.R. Rahman', 'Shankar Mahadevan', 'Arijit Singh', 'Himesh Reshammiya',
+                    'Neha Kakkar', 'Badshah', 'Divine', 'Yo Yo Honey Singh',
+                    'Baarish Ban Jaana', 'Tum Hi Ho', 'Kal Ho Naa Ho', 'Kabhi Kabhi',
+                    'Deewana Tera', 'Apna Time Ayega', 'Ae Dil Hai Mushkil', 'Raag Bhairav'
+                ]
+            },
+            'slang': {
+                name: '🇮🇳 Indian Slang',
+                icon: '🇮🇳',
+                words: [
+                    'Desi', 'Jugaad', 'Chikna', 'Chutzpah', 'Paisa',
+                    'Tera Baap', 'Behenchod', 'Saala', 'Harami', 'Badmash',
+                    'Thanda Pav', 'Chai Pani', 'Naan Khatamal', 'Lafda', 'Dimag',
+                    'Utti Pataang', 'Jalsa', 'Bakwaas', 'Besharam', 'Pagal',
+                    'Acha Bhala', 'Bilkul', 'Bilkul Sahi', 'Theek Ache', 'Chalta Hai'
+                ]
+            },
+            'culture': {
+                name: '🛕 Indian Culture & Festivals',
+                icon: '🛕',
+                words: [
+                    'Diwali', 'Holi', 'Eid', 'Christmas', 'Durga Puja',
+                    'Navratri', 'Raksha Bandhan', 'Makar Sankranti', 'Pongal', 'Onam',
+                    'Taj Mahal', 'Varanasi', 'Ayodhya Ram Mandir', 'Golden Temple',
+                    'Yoga', 'Ayurveda', 'Karma', 'Dharma', 'Moksha',
+                    'Namaste', 'Aum', 'Mandala', 'Chakra', 'Chakra Meditation',
+                    'Saree', 'Kurta', 'Dhoti', 'Turban', 'Bindi'
+                ]
+            },
+            'personality': {
+                name: '🧠 Indian Personalities',
+                icon: '🧠',
+                words: [
+                    'Mahatma Gandhi', 'Jawaharlal Nehru', 'Indira Gandhi', 'Sardar Vallabhbhai Patel',
+                    'Subhas Chandra Bose', 'Bhagat Singh', 'Chandrashekhar Azad',
+                    'Dr. Ambedkar', 'Dalit Leader', 'Ramakrishna Paramahamsa', 'Swami Vivekananda',
+                    'Sri Aurobindo', 'Keshab Chandra Sen', 'Bankim Chandra', 'Rabindranath Tagore',
+                    'Ishwar Chandra Vidyasagar', 'Savitribai Phule', 'Pandita Ramabai',
+                    'MS Subbulakshmi', 'Pratibha Ray', 'Arundhati Roy', 'Kalpana Chawla'
+                ]
+            },
+            'party': {
+                name: '😂 Desi Party Mode',
+                icon: '😂',
+                words: [
+                    'Thakela', 'Chakla', 'Nakli Designer', 'Duplicate Brand',
+                    'Pagdi Sambhalo Jee', 'Ghar Ka Khana', 'Daaru Party',
+                    'Mehndi Lagaao', 'Shaadi Ka Natak', 'Khichdi Family',
+                    'Bindaas', 'Jhakaas', 'Badshah of Party', 'Dance Floor Ka Raja',
+                    'Nasha Utaar Ke', 'Tequila Shot', 'Biryani Ki Khushbu', 'Tandoori Chicken',
+                    'Nautch Girl Moves', 'Belly Dance', 'Full Tight', 'Loose Motion Fever'
+                ]
+            },
+            'kids': {
+                name: '👶 Kids Mode',
+                icon: '👶',
+                words: [
+                    'Mummy', 'Papa', 'Nani', 'Dada', 'Chacha', 'Chachi',
+                    'Kitty', 'Puppy', 'Monkey', 'Tiger', 'Elephant',
+                    'Mango', 'Apple', 'Banana', 'Ice Cream', 'Chocolate',
+                    'School', 'Teacher', 'Book', 'Pencil', 'Playground',
+                    'Cartoon', 'Toys', 'Doll', 'Ball', 'Bicycle',
+                    'Rainbow', 'Butterfly', 'Flower', 'Sun', 'Moon',
+                    'Cricket', 'Kite', 'Marbles', 'Hide and Seek', 'Tag'
+                ]
+            }
+        };
+
+        // ========== STATE MANAGEMENT ==========
+        let gameState = {
+            mode: null,
+            category: null,
+            words: [],
+            currentWordIndex: 0,
+            correctCount: 0,
+            skipCount: 0,
+            timeRemaining: 60,
+            gameActive: false,
+            timerInterval: null
+        };
+
+        // ========== INITIALIZATION ==========
+        function initializeGame() {
+            renderCategories();
+        }
+
+        function renderCategories() {
+            const categoryGrid = document.getElementById('categoryGrid');
+            const categoryMap = {
+                'movies': 'cat-movies',
+                'theatre': 'cat-theatre',
+                'songs': 'cat-songs',
+                'slang': 'cat-slang',
+                'culture': 'cat-culture',
+                'personality': 'cat-personality',
+                'party': 'cat-party',
+                'kids': 'cat-kids'
+            };
+
+            categoryGrid.innerHTML = '';
+            Object.entries(categories).forEach(([key, category]) => {
+                const card = document.createElement('div');
+                card.className = `category-card ${categoryMap[key]}`;
+                card.innerHTML = `
+                    <div class="category-icon">${category.icon}</div>
+                    <div class="category-name">${category.name.split(' ').slice(1).join(' ')}</div>
+                    <div class="category-count">${category.words.length} words</div>
+                `;
+                card.onclick = () => selectCategory(key);
+                categoryGrid.appendChild(card);
+            });
+        }
+
+        // ========== MODE SELECTION ==========
+        function startMode(mode) {
+            gameState.mode = mode;
+            showScreen('category-screen');
+        }
+
+        function selectCategory(categoryKey) {
+            gameState.category = categoryKey;
+            gameState.words = [...categories[categoryKey].words];
+            shuffleArray(gameState.words);
+
+            if (gameState.mode === 'daily') {
+                checkDailyChallenge();
+            } else {
+                startGamePlay();
+            }
+        }
+
+        function checkDailyChallenge() {
+            const today = new Date().toDateString();
+            const dailyKey = `daily_${gameState.category}_${today}`;
+            const played = localStorage.getItem(dailyKey);
+
+            if (played) {
+                showScreen('dailyLockedScreen');
+                updateUnlockTime();
+            } else {
+                startGamePlay();
+            }
+        }
+
+        function updateUnlockTime() {
+            const now = new Date();
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(0, 0, 0, 0);
+            
+            const timeUntil = Math.ceil((tomorrow - now) / 1000);
+            const hours = Math.floor(timeUntil / 3600);
+            const minutes = Math.floor((timeUntil % 3600) / 60);
+            
+            document.getElementById('unlockTime').textContent = 
+                `⏰ Come back in ${hours}h ${minutes}m`;
+        }
+
+        // ========== GAME PLAY ==========
+        function startGamePlay() {
+            gameState.correctCount = 0;
+            gameState.skipCount = 0;
+            gameState.currentWordIndex = 0;
+            gameState.timeRemaining = 60;
+            gameState.gameActive = true;
+
+            showScreen('game-screen');
+            document.body.classList.add('game-active');
+            
+            displayWord();
+            startTimer();
+            preventScreenSleep();
+        }
+
+        function displayWord() {
+            if (gameState.currentWordIndex >= gameState.words.length) {
+                shuffleArray(gameState.words);
+                gameState.currentWordIndex = 0;
+            }
+
+            const word = gameState.words[gameState.currentWordIndex];
+            document.getElementById('wordDisplay').textContent = word;
+            updateUI();
+        }
+
+        function updateUI() {
+            document.getElementById('correctCount').textContent = gameState.correctCount;
+            document.getElementById('skipCount').textContent = gameState.skipCount;
+        }
+
+        function markCorrect() {
+            playSound('correct');
+            gameState.correctCount++;
+            nextWord();
+        }
+
+        function markSkip() {
+            playSound('skip');
+            gameState.skipCount++;
+            nextWord();
+        }
+
+        function nextWord() {
+            gameState.currentWordIndex++;
+            displayWord();
+        }
+
+        function startTimer() {
+            clearInterval(gameState.timerInterval);
+            gameState.timerInterval = setInterval(() => {
+                gameState.timeRemaining--;
+                document.getElementById('timerDisplay').textContent = gameState.timeRemaining;
+
+                const timerDisplay = document.getElementById('timerDisplay');
+                if (gameState.timeRemaining <= 5) {
+                    timerDisplay.classList.add('low');
+                    playSound('tick');
+                } else {
+                    timerDisplay.classList.remove('low');
+                }
+
+                if (gameState.timeRemaining <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function endGame() {
+            clearInterval(gameState.timerInterval);
+            gameState.gameActive = false;
+            document.body.classList.remove('game-active');
+
+            // Mark daily challenge as played
+            if (gameState.mode === 'daily') {
+                const today = new Date().toDateString();
+                const dailyKey = `daily_${gameState.category}_${today}`;
+                localStorage.setItem(dailyKey, 'true');
+            }
+
+            // Save best score
+            saveBestScore();
+
+            showResults();
+        }
+
+        function saveBestScore() {
+            const scoreKey = `best_${gameState.category}`;
+            const bestScore = parseInt(localStorage.getItem(scoreKey) || 0);
+            if (gameState.correctCount > bestScore) {
+                localStorage.setItem(scoreKey, gameState.correctCount);
+            }
+        }
+
+        function showResults() {
+            const finalScore = gameState.correctCount;
+            document.getElementById('finalCorrect').textContent = gameState.correctCount;
+            document.getElementById('finalSkipped').textContent = gameState.skipCount;
+            document.getElementById('finalScore').textContent = finalScore;
+
+            // Generate share text
+            const categoryName = categories[gameState.category].name;
+            const emoji = gameState.correctCount >= 15 ? '🔥' : gameState.correctCount >= 10 ? '⭐' : '👍';
+            const shareText = `I scored ${finalScore} on Heads Up! ${categoryName}\n${emoji} Can you beat my score?`;
+            document.getElementById('shareBox').textContent = shareText;
+
+            showScreen('results-screen');
+        }
+
+        function copyShare() {
+            const shareBox = document.getElementById('shareBox');
+            const text = shareBox.textContent;
+            
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    const btn = event.target;
+                    const original = btn.textContent;
+                    btn.textContent = '✅ Copied!';
+                    setTimeout(() => {
+                        btn.textContent = original;
+                    }, 2000);
+                });
+            } else {
+                // Fallback for older browsers
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+            }
+        }
+
+        // ========== SCREEN NAVIGATION ==========
+        function showScreen(screenClass) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+
+            if (screenClass === 'category-screen') {
+                document.querySelector('.category-screen').classList.add('active');
+            } else if (screenClass === 'game-screen') {
+                document.querySelector('.game-screen').classList.add('active');
+            } else if (screenClass === 'results-screen') {
+                document.querySelector('.results-screen').classList.add('active');
+            } else if (screenClass === 'dailyLockedScreen') {
+                document.getElementById('dailyLockedScreen').classList.add('active');
+            } else {
+                document.querySelector('.home-screen').classList.add('active');
+            }
+        }
+
+        function restartGame() {
+            if (gameState.mode === 'solo') {
+                showScreen('category-screen');
+            } else {
+                selectCategory(gameState.category);
+            }
+        }
+
+        function goHome() {
+            gameState = {
+                mode: null,
+                category: null,
+                words: [],
+                currentWordIndex: 0,
+                correctCount: 0,
+                skipCount: 0,
+                timeRemaining: 60,
+                gameActive: false,
+                timerInterval: null
+            };
+            clearInterval(gameState.timerInterval);
+            document.body.classList.remove('game-active');
+            showScreen('home-screen');
+        }
+
+        // ========== UTILITIES ==========
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function playSound(type) {
+            // Create simple beep using Web Audio API
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+
+                if (type === 'correct') {
+                    oscillator.frequency.value = 800;
+                    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.2);
+                } else if (type === 'skip') {
+                    oscillator.frequency.value = 600;
+                    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.15);
+                } else if (type === 'tick') {
+                    oscillator.frequency.value = 1000;
+                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.05);
+                }
+            } catch (e) {
+                // Audio context not available, silently fail
+            }
+        }
+
+        function preventScreenSleep() {
+            if ('wakeLock' in navigator) {
+                navigator.wakeLock.request('screen').catch(err => {
+                    console.log('Wake lock not available:', err);
+                });
+            }
+        }
+
+        // ========== INITIALIZATION ON LOAD ==========
+        document.addEventListener('DOMContentLoaded', initializeGame);
+    </script>
+</body>
+</html>
